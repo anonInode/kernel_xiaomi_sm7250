@@ -12,6 +12,7 @@
 #  Add clang to your PATH before using this script.
 #
 
+export PATH="/opt/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
 ARCH=arm64;
 CC=clang;
 LD=ld.lld
