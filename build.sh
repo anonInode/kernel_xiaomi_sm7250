@@ -53,6 +53,14 @@ make_defconfig(){
     make CC=$CC ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE CROSS_COMPILE_COMPAT=$CROSS_COMPILE_COMPAT CLANG_TRIPLE=$CLANG_TRIPLE LLVM=1 LLVM_IAS=1 $CC_ADDITION_FLAGS O=$OUT -j$THREAD $DEFCONFIG_NAME;
 }
 
+make_menuconfig(){
+    echo "------------------------------";
+    echo " Building Kernel Menuconfig..";
+    echo "------------------------------";
+
+    make CC=$CC ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE CROSS_COMPILE_COMPAT=$CROSS_COMPILE_COMPAT CLANG_TRIPLE=$CLANG_TRIPLE LLVM=1 LLVM_IAS=1 $CC_ADDITION_FLAGS O=$OUT -j$THREAD menuconfig;
+}
+
 build_kernel(){
     echo "------------------------------";
     echo " Building Kernel ...........";
@@ -129,7 +137,8 @@ main(){
         echo
         echo "    flashable       Only generate the flashable zip file. Don't use it before you have built once."
         echo "    savedefconfig   Save the defconfig file to source tree."
-        echo "    defconfig       Only build kernel defconfig"
+        echo "    defconfig       Only build kernel defconfig."
+        echo "    menu            Show menuconfig and save it."
         echo "    help ( -h )     Print help information."
         echo "    version         Display the version number."
         echo
@@ -159,6 +168,11 @@ main(){
     elif [ $1 == "defconfig" ]
     then
         make_defconfig;
+    elif [ $1 == "menu" ]
+    then
+        make_defconfig
+        make_menuconfig
+        save_defconfig
     elif [ $1 == "version" ] 
     then 
         echo "Current version is: $LOCAL_VERSION_NUMBER"
